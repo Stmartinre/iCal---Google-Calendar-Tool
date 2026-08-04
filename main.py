@@ -208,7 +208,8 @@ if __name__ == '__main__':
         for event in gcal_events.get("items", []):
             title = event.get("summary")
             if title not in ical_titles:
-                delete_event(title)
+                if title != 'Hostshare':
+                    delete_event(title)
 
 
 
