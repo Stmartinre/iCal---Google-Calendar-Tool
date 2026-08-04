@@ -3,6 +3,7 @@ import requests
 from zoneinfo import ZoneInfo
 import datetime
 import time
+import os
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from datetime import datetime
@@ -14,10 +15,9 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-airbnb_ical = 'https://www.airbnb.com/calendar/ical/932851036319587240.ics?t=277d07c17f2a44f9b20ddb50315fa5fd'
-booking_ical = 'https://ical.booking.com/v1/export?t=fcc4d727-9ec9-41a7-9355-9e3129b2d754'
-hostshare_ical = 'https://ics.hostshare.co/0-1792685843941425758.ics'
-gcal = 'c_f9e636991c75b21226b1170265f80076910f6a93aae635c851a27f7628e6c5ef@group.calendar.google.com'
+airbnb_ical = os.environ.get("AIRBNB_ICAL")
+booking_ical = os.environ.get("BOOKING_ICAL")
+gcal = os.environ.get("GOOGLE_CAL_ID")
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 
