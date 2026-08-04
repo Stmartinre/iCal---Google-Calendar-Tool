@@ -45,5 +45,5 @@ jobs:
         env:
           AIRBNB_ICAL: ${{ secrets.AIRBNB_ICAL }}
           BOOKING_ICAL: ${{ secrets.BOOKING_ICAL }}
-          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+          GOOGLE_CAL_ID: ${{ secrets.GOOGLE_CAL_ID }}
         run: python main.py
