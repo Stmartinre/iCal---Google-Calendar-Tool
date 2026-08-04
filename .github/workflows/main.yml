@@ -1,12 +1,18 @@
 name: iCal Sync
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ical-sync
+  cancel-in-progress: false
+
 on:
   schedule:
-    # Every 30 minutes
     - cron: "*/30 * * * *"
 
-  # Allows you to click "Run workflow"
   workflow_dispatch:
+
 
 jobs:
   sync:
@@ -26,9 +32,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Restore Google credential files
+        shell: bash
+        run: |
+          echo "$GOOGLE_CREDENTIALS" | base64 --decode > credentials.json
+          echo "$GOOGLE_TOKEN" | base64 --decode > token.json
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_TOKEN: ${{ secrets.GOOGLE_TOKEN }}
+
       - name: Run sync script
         env:
-          AIRBNB_URL: ${{ secrets.AIRBNB_URL }}
-          BOOKING_URL: ${{ secrets.BOOKING_URL }}
+          AIRBNB_ICAL: ${{ secrets.AIRBNB_ICAL }}
+          BOOKING_ICAL: ${{ secrets.BOOKING_ICAL }}
           GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
-        run: python sync.py
+        run: python main.py
